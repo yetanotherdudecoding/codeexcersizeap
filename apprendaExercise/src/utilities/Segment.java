@@ -1,4 +1,5 @@
 package utilities;
+
 /**
  * 
  * @author brads
@@ -12,22 +13,22 @@ public class Segment {
 	private Double slope = null;
 
 	public Segment(Vertex vertex1, Vertex vertex2) {
-		
-	this.vertex1 = (vertex1);
-	this.vertex2 = (vertex2);
-	//There is hell to be paid if we assume each segment has a slope
-	if(vertex1.getxValue().equals(vertex2.getxValue()) || vertex1.getyValue().equals(vertex2.getyValue())) {
-		if(vertex1.getxValue().equals(vertex2.getxValue())){
-			//Then we are a vertical line
-			this.setxLine(vertex1.getxValue());
-		}
-		if(vertex1.getyValue().equals(vertex2.getyValue())) {
-			//Then we are a horizontal line
-			this.setyLine(vertex1.getyValue());
-		}
+
+		this.vertex1 = (vertex1);
+		this.vertex2 = (vertex2);
+		// There is hell to be paid if we assume each segment has a slope
+		if (vertex1.getxValue().equals(vertex2.getxValue()) || vertex1.getyValue().equals(vertex2.getyValue())) {
+			if (vertex1.getxValue().equals(vertex2.getxValue())) {
+				// Then we are a vertical line
+				this.setxLine(vertex1.getxValue());
+			}
+			if (vertex1.getyValue().equals(vertex2.getyValue())) {
+				// Then we are a horizontal line
+				this.setyLine(vertex1.getyValue());
+			}
 		} else {
-			
-			setSlope((vertex2.getyValue() - vertex1.getyValue())/(vertex2.getxValue() - vertex1.getxValue()));
+
+			setSlope((vertex2.getyValue() - vertex1.getyValue()) / (vertex2.getxValue() - vertex1.getxValue()));
 		}
 	}
 
