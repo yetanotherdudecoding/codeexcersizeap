@@ -30,6 +30,7 @@ public class Rectangle implements Polygon {
 		vertices.add(vertex2);
 		vertices.add(vertex3);
 		vertices.add(vertex4);
+		
 	}
 
 	@Override
@@ -82,7 +83,8 @@ public class Rectangle implements Polygon {
 
 	private PointOfIntersection getPointOfIntersectionBetweenSegments(Segment segmenta, Segment segmentb) {
 		PointOfIntersection poi = null;
-		// Diverge here to handle the case that both segments are parallel to the x or y
+		// Diverge here to handle the case that both segments are parallel to the x and
+		// y
 		// axis. We will see if there is time to handle rotated rectangles.
 
 		if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
@@ -108,7 +110,7 @@ public class Rectangle implements Polygon {
 	}
 
 	@Override
-	// TODO: I do not know why this is not letting me use the private scope on this
+	// TODO: I do not know why this is not letting me use a private scope on this
 	// method.
 	public boolean validatePointOfIntersectionOnSegment(PointOfIntersection poi, Segment segmenta, Segment segmentb) {
 		return (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(), poi.getX())
@@ -129,8 +131,44 @@ public class Rectangle implements Polygon {
 
 	@Override
 	public boolean isAdjacentToPolygon(Polygon otherPolygon) {
-		// TODO Auto-generated method stub
+		for (Segment segmenta : segments) {
+			for (Segment segmentb : otherPolygon.getAllLineSegments()) {
+				// Diverge here to handle the case that both segments are parallel to the x and
+				// y axis
+				if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
+					if (segmenta.getxLine() != null && segmentb.getxLine() != null) {
+						if (segmenta.getxLine().equals(segmentb.getxLine())) {
+							// These lines could potentially overlap since they share the same line equation
+							if (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
+									segmentb.getVertex1().getxValue())
+									&& isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
+											segmentb.getVertex2().getxValue())) {
+								return true;
+							}
+						}
+					}
+					if (segmenta.getyLine() != null && segmentb.getyLine() != null) {
+						if (segmenta.getyLine().equals(segmentb.getyLine())) {
+							// These lines could potentially overlap since they share the same line equation
+							if (isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
+									segmentb.getVertex1().getyValue())
+									&& isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
+											segmentb.getVertex2().getyValue())) {
+								return true;
+							}
+						}
+					}
+
+				}
+			}
+		}
+
 		return false;
 	}
-
+private boolean isRectangle() {
+	
+	//TODO: Validate relationships we only see in rectangles
+	
+	return true;
+}
 }

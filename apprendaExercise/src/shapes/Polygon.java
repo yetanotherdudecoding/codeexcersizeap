@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  */
 public interface Polygon {
-
+	// TODO: Review these interface methods for all polygons.
 	ArrayList<PointOfIntersection> getIntersectionsWithPolygon(Polygon otherPolygon);
 
 	boolean containsPolygon(Polygon otherPolygon);
