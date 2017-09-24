@@ -27,8 +27,9 @@ public class Segment {
 				this.setyLine(vertex1.getyValue());
 			}
 		} else {
-
-			setSlope((vertex2.getyValue() - vertex1.getyValue()) / (vertex2.getxValue() - vertex1.getxValue()));
+			System.out.println("Sorry, rotated rectangles are not supported yet, and if you're reading this, they probably never will be");
+			System.exit(0);
+			//setSlope((vertex2.getyValue() - vertex1.getyValue()) / (vertex2.getxValue() - vertex1.getxValue()));
 		}
 	}
 

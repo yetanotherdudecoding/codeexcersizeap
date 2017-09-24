@@ -30,7 +30,7 @@ public class Rectangle implements Polygon {
 		vertices.add(vertex2);
 		vertices.add(vertex3);
 		vertices.add(vertex4);
-		
+
 	}
 
 	@Override
@@ -136,6 +136,7 @@ public class Rectangle implements Polygon {
 				// Diverge here to handle the case that both segments are parallel to the x and
 				// y axis
 				if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
+					//Make sure that we are dealing with two lines which have vertical asymptotes
 					if (segmenta.getxLine() != null && segmentb.getxLine() != null) {
 						if (segmenta.getxLine().equals(segmentb.getxLine())) {
 							// These lines could potentially overlap since they share the same line equation
@@ -147,6 +148,7 @@ public class Rectangle implements Polygon {
 							}
 						}
 					}
+					//Make sure that we are dealing with two lines which have horizontal asymptotes
 					if (segmenta.getyLine() != null && segmentb.getyLine() != null) {
 						if (segmenta.getyLine().equals(segmentb.getyLine())) {
 							// These lines could potentially overlap since they share the same line equation
@@ -165,10 +167,12 @@ public class Rectangle implements Polygon {
 
 		return false;
 	}
-private boolean isRectangle() {
-	
-	//TODO: Validate relationships we only see in rectangles
-	
-	return true;
-}
+
+	@Override
+	public boolean isValidPolygon() {
+
+		// TODO: Validate relationships we only see in rectangles
+
+		return true;
+	}
 }

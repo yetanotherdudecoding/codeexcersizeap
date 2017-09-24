@@ -47,4 +47,14 @@ public class TestAdjacency {
 
 		assert (!polygona.isAdjacentToPolygon(polygonb));
 	}
+	
+	@Test
+	public void testHorizontalAdjacency() {
+		assert(false);
+	}
+	
+	@Test 
+	public void testHorizontalAdjacencyNegativeQuadrant() {
+		assert(false);
+	}
 }
