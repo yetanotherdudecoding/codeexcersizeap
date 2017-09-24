@@ -132,7 +132,7 @@ public class Rectangle implements Polygon {
 	@Override
 	public boolean isAdjacentToPolygon(Polygon otherPolygon) {
 		for (Segment segmenta : segments) {
-			for (Segment segmentb : segments) {
+			for (Segment segmentb : otherPolygon.getAllLineSegments()) {
 				// Diverge here to handle the case that both segments are parallel to the x and
 				// y axis
 				if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
