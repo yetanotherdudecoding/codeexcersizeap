@@ -2,6 +2,9 @@ package shapes;
 
 import utilities.Vertex;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import utilities.Segment;
 import utilities.PointOfIntersection;
 
@@ -51,7 +54,12 @@ public class Rectangle implements Polygon {
 				PointOfIntersection poi = null;// Flush for this analysis
 				poi = getPointOfIntersectionBetweenSegments(mySegment, otherSegment);
 				if (poi != null) {
-					allPois.add(poi);
+					// It is possible a point of intersection may appear twice if a line segment
+					// intersects directly on the vertex
+					if (!allPois.contains(poi)) {
+						allPois.add(poi);
+					}
+
 				}
 			}
 		}
@@ -62,45 +70,124 @@ public class Rectangle implements Polygon {
 
 	@Override
 	public boolean containsPolygon(Polygon otherPolygon) {
-		Double xmin = vertices.get(0).getxValue();
-		Double xmax = vertices.get(1).getxValue();
-
-		Double ymin = vertices.get(1).getyValue();
-		Double ymax = vertices.get(2).getyValue();
 
 		for (Vertex aVertex : otherPolygon.getAllVertices()) {
-			if (!(isBetween(xmin, xmax, aVertex.getxValue()) && isBetween(ymin, ymax, aVertex.getyValue()))) {
-				return false;
+			// For rectangle ABCD and point p is within the rectangle, then the area of
+			// sub-triangles formed by
+			// points ABP, BCP, CDP, DAP should equal the area of rectangle ABCD, if greater
+			// than it is outside
+			Double triangleArea = areaOfTriangle(vertices.get(0), vertices.get(1), aVertex)
+					+ areaOfTriangle(vertices.get(1), vertices.get(2), aVertex)
+					+ areaOfTriangle(vertices.get(2), vertices.get(3), aVertex)
+					+ areaOfTriangle(vertices.get(3), vertices.get(0), aVertex);
+			Double rectangleArea = areaOfRectangle(vertices.get(0), vertices.get(1), vertices.get(2));
+			
+			if(triangleArea.equals(rectangleArea)) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 
+	}
+
+	public Double areaOfRectangle(Vertex vertexA, Vertex vertexB, Vertex vertexC) {
+		Double side1 = getLength(vertexA, vertexB);
+		Double side2 = getLength(vertexB, vertexC);
+
+		return side1 * side2;
+	}
+
+	public Double areaOfTriangle(Vertex vertexA, Vertex vertexB, Vertex vertexC) {
+		Double base = getLength(vertexA, vertexB);
+		// Use the midpoint of one line to determine the height in relation to the
+		// opposite point
+		Vertex midpoint = new Vertex(((vertexA.getxValue() + vertexB.getxValue()) / 2),
+				((vertexA.getyValue() + vertexB.getyValue()) / 2));
+		Double height = getLength(midpoint, vertexC);
+
+		return (0.5 * base * height);
+	}
+
+	public Double getLength(Vertex vertex1, Vertex vertex2) {
+		return Math.sqrt(Math.pow(vertex2.getxValue() - vertex1.getxValue(), 2)
+				+ Math.pow(vertex2.getyValue() - vertex1.getyValue(), 2));
 	}
 
 	public ArrayList<Segment> getAllLineSegments() {
 		return segments;
 	}
 
+	/**
+	 * We compare two line segments in this method. There are two kinds of line
+	 * segments. Segments whose equation is either a straight line perpendicular to
+	 * the x or y axis, in that case there equation is the integer intersecting that
+	 * axis (e.g. x=3 or y=3)
+	 * 
+	 * There are also those of sloped lines, whose equation is of the form y=mx+b
+	 * 
+	 * Since a either of the two received segments could be straight or sloped, we
+	 * handle the following combinations - Both non-sloped segments - One
+	 * non-sloped, one sloped segment - Both sloped segments
+	 * 
+	 * We finish by validating that these points of intersection actually occur on
+	 * the domain/range of the segments we are validating before returning the point
+	 * of intersection
+	 * 
+	 * @param segmenta
+	 *            - Segment
+	 * @param segmentb
+	 *            - Segment
+	 * @return poi - PointOfIntersection
+	 */
 	private PointOfIntersection getPointOfIntersectionBetweenSegments(Segment segmenta, Segment segmentb) {
 		PointOfIntersection poi = null;
-		// Diverge here to handle the case that both segments are parallel to the x and
-		// y
-		// axis. We will see if there is time to handle rotated rectangles.
+		Double xIntersection = null;
+		Double yIntersection = null;
+		// Intersection of two non-sloped lines
+		if (segmenta.getxLine() != null && segmentb.getyLine() != null) {
+			// segmenta is vertical and segmentb is horizontal
+			poi = new PointOfIntersection(segmenta.getxLine(), segmentb.getyLine());
+		}
+		if (segmenta.getyLine() != null && segmentb.getxLine() != null) {
+			// segmenta is horizontal and segmentb is vertical
+			poi = new PointOfIntersection(segmentb.getxLine(), segmenta.getyLine());
+		}
 
-		if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
-			if (segmenta.getyLine() == null && segmentb.getyLine() == null
-					|| segmenta.getxLine() == null && segmentb.getxLine() == null) {
-				return null;
-			}
-			if (segmenta.getxLine() == null && segmentb.getyLine() == null) {
-				// segmenta is horizontal and segmentb is vertical
-				poi = new PointOfIntersection(segmentb.getxLine(), segmenta.getyLine());
-			}
-			if (segmenta.getyLine() == null && segmentb.getxLine() == null) {
-				// segmenta is vertical and segmentb is horizontal
-				poi = new PointOfIntersection(segmenta.getxLine(), segmentb.getyLine());
-			}
+		// Line segment a is sloped and line segment b is non-sloped
+		if (segmenta.getSlope() != null && segmentb.getSlope() == null) {
 
+			// line segment b is vertical and we will intercept where segmenta line equation
+			// resolves to y
+			if (segmentb.getxLine() != null) {
+				poi = new PointOfIntersection(segmentb.getxLine(), segmenta.computeYForX(segmentb.getxLine()));
+
+			}
+			// line segment b is horizontal and we will intercept where segmenta line
+			// equation resolves to x
+			if (segmentb.getyLine() != null) {
+				poi = new PointOfIntersection(segmenta.computeXForY(segmentb.getyLine()), segmentb.getyLine());
+			}
+		}
+		// Line segmentb is sloped and line segmenta is non-sloped
+		if (segmentb.getSlope() != null && segmenta.getSlope() == null) {
+
+			if (segmenta.getxLine() != null) {
+				poi = new PointOfIntersection(segmenta.getxLine(), segmentb.computeYForX(segmenta.getxLine()));
+
+			}
+			if (segmenta.getyLine() != null) {
+				poi = new PointOfIntersection(segmentb.computeXForY(segmenta.getyLine()), segmenta.getyLine());
+			}
+		}
+
+		// Intersection of two sloped line segments
+		if (segmenta.getSlope() != null && segmentb.getSlope() != null)
+
+		{
+
+		}
+		if (poi == null) {
+			return null;
 		}
 		if (validatePointOfIntersectionOnSegment(poi, segmenta, segmentb)) {
 			return poi;
@@ -136,7 +223,7 @@ public class Rectangle implements Polygon {
 				// Diverge here to handle the case that both segments are parallel to the x and
 				// y axis
 				if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
-					//Make sure that we are dealing with two lines which have vertical asymptotes
+					// Make sure that we are dealing with two lines which have vertical asymptotes
 					if (segmenta.getxLine() != null && segmentb.getxLine() != null) {
 						if (segmenta.getxLine().equals(segmentb.getxLine())) {
 							// These lines could potentially overlap since they share the same line equation
@@ -148,7 +235,7 @@ public class Rectangle implements Polygon {
 							}
 						}
 					}
-					//Make sure that we are dealing with two lines which have horizontal asymptotes
+					// Make sure that we are dealing with two lines which have horizontal asymptotes
 					if (segmenta.getyLine() != null && segmentb.getyLine() != null) {
 						if (segmenta.getyLine().equals(segmentb.getyLine())) {
 							// These lines could potentially overlap since they share the same line equation

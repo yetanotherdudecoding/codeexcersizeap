@@ -1,10 +1,13 @@
 package test;
 
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import shapes.Polygon;
 import shapes.Rectangle;
+import utilities.PointOfIntersection;
 import utilities.Vertex;
 
 public class TestContains {
@@ -47,5 +50,43 @@ public class TestContains {
 
 		assert (!polygona.containsPolygon(polygonb));
 	}
+	@Test
+	public void testRotatedRectangleContains() {
+		Polygon polygona = new Rectangle(new Vertex(2.0, 7.0), new Vertex(11.0, 7.0), new Vertex(11.0, 1.0),
+				new Vertex(2.0, 1.0));
+		Polygon polygonb = new Rectangle(new Vertex(6.0, 7.0), new Vertex(8.0, 5.0), new Vertex(6.0, 3.0),
+				new Vertex(4.0, 5.0));
 
+		assert (polygona.containsPolygon(polygonb));
+		assert (!polygonb.containsPolygon(polygona));
+	}
+	@Test 
+	public void testRotatedRectangleNotContains() {
+		Polygon polygona = new Rectangle(new Vertex(1.0, 4.0), new Vertex(6.0, 9.0), new Vertex(9.0, 6.0),
+				new Vertex(4.0, 1.0));
+		Polygon polygonb = new Rectangle(new Vertex(7.0, 9.0), new Vertex(12.0, 9.0), new Vertex(12.0, 4.0),
+				new Vertex(7.0, 4.0));
+
+		assert (!polygona.containsPolygon(polygonb));
+	}
+	
+	@Test
+	public void testRotatedRectangleContainedInRotatedRectangle() {
+		Polygon polygona = new Rectangle(new Vertex(4.0, 7.0), new Vertex(7.0, 4.0), new Vertex(4.0, 1.0),
+				new Vertex(1.0, 4.0));
+		Polygon polygonb = new Rectangle(new Vertex(4.0, 5.0), new Vertex(5.0, 4.0), new Vertex(4.0, 3.0),
+				new Vertex(3.0, 4.0));
+
+		assert (polygona.containsPolygon(polygonb));
+		assert (!polygonb.containsPolygon(polygona));
+	}
+	@Test 
+	public void testRotatedRectanglenNotContainedInRotatedRectangle() {
+		Polygon polygona = new Rectangle(new Vertex(3.0, 6.0), new Vertex(5.0, 4.0), new Vertex(3.0, 2.0),
+				new Vertex(1.0, 4.0));
+		Polygon polygonb = new Rectangle(new Vertex(5.0, 3.0), new Vertex(6.0, 2.0), new Vertex(5.0, 1.0),
+				new Vertex(4.0, 2.0));
+
+		assert (!polygona.containsPolygon(polygonb));
+	}
 }
