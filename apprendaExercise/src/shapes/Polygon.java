@@ -19,13 +19,9 @@ public interface Polygon {
 
 	boolean isAdjacentToPolygon(Polygon otherPolygon);
 
-	boolean validatePointOfIntersectionOnSegment(Vertex pointOfIntersection, Segment segmenta, Segment segmentb);
-
 	ArrayList<Segment> getAllLineSegments();
 
 	ArrayList<Vertex> getAllVertices();
-
-	boolean equals(Object otherObject);
 
 	String toString();
 

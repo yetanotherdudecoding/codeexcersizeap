@@ -32,10 +32,10 @@ public class Client {
 				+ " and a " + polygon2Name + ".");
 		System.out.println(
 				"1) Points of intersection (if any)\n2) Whether one polygon is contained in the other\n3)If any side of one polygon is adjacent to a side of the other");
-		System.out.println("You will now enter the verticies of the first polygon, " + polygon1Name
-				+ ". Enter each vertex in x,y format.\ne.g. vertex1: 1.0,3");
+		System.out.println("\nYou will now enter the verticies of the first polygon, " + polygon1Name
+				+ ". \nEnter each vertex in x,y format.e.g. vertex1: 1.0,3");
 		System.out.println("Please enter the coordinates CLOCKWISE or COUNTERCLOCKWISE");
-		System.out.println(polygon1Name + ":");
+		System.out.println(polygon1Name + "-");
 		int i = 0;
 		while (i <= 3) {
 			vertexPoints = null;
@@ -56,9 +56,9 @@ public class Client {
 		}
 
 		System.out.println(polygon1Name + " has verticies: " + polygon1Verticies);
-		System.out.println("You will now enter the verticies of the second polygon, " + polygon2Name + ".");
+		System.out.println("\nYou will now enter the verticies of the second polygon, " + polygon2Name + ".");
 		System.out.println("Please enter the coordinates CLOCKWISE or COUNTERCLOCKWISE");
-		System.out.println(polygon2Name + ":");
+		System.out.println(polygon2Name + "-");
 		i = 0;
 		x = null;
 		y = null;

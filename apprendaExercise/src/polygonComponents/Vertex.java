@@ -38,14 +38,14 @@ public class Vertex {
 	}
 
 	@Override
-	public boolean equals(Object otherObject) {
-		if (otherObject == this) {
+	public boolean equals(Object object) {
+		if (object == this) {
 			return true;
 		}
-		if (!(otherObject instanceof Vertex)) {
+		if (!(object instanceof Vertex)) {
 			return false;
 		}
-		Vertex aVertex = (Vertex) otherObject;
+		Vertex aVertex = (Vertex) object;
 		if (aVertex.getxValue().equals(getxValue()) && aVertex.getyValue().equals(getyValue())) {
 			return true;
 		}

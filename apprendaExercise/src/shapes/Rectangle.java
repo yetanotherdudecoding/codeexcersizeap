@@ -18,7 +18,7 @@ public class Rectangle implements Polygon {
 																	// order
 
 	/**
-	 * Constructor for rectangle type of polygon
+	 * Constructors for rectangle type of polygon
 	 * 
 	 * @param vertex1
 	 * @param vertex2
@@ -68,7 +68,7 @@ public class Rectangle implements Polygon {
 	 * @param vertexD
 	 * @return Double - area of rectangle
 	 */
-	public Double areaOfRectangle(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD) {
+	private Double areaOfRectangle(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD) {
 		Vertex vertex1 = vertexA;
 		Vertex vertex2 = vertexD;
 		Vertex vertex3 = vertexC;
@@ -90,7 +90,7 @@ public class Rectangle implements Polygon {
 	 * @param vertexC
 	 * @return Double - area of triangle
 	 */
-	public Double areaOfTriangle(Vertex vertexA, Vertex vertexB, Vertex vertexC) {
+	private Double areaOfTriangle(Vertex vertexA, Vertex vertexB, Vertex vertexC) {
 		Vertex vertex1 = vertexA;
 		Vertex vertex2 = vertexC;
 		Vertex vertex3 = vertexB;
@@ -102,6 +102,24 @@ public class Rectangle implements Polygon {
 
 		return Math.abs(determinate / 2);
 
+	}
+
+	/**
+	 * Since the order of the points is not guaranteed, we find the minimum and
+	 * maximum between these points and test that the value is between.
+	 * 
+	 * @param a
+	 *            - end point
+	 * @param b
+	 *            - end point
+	 * @param c
+	 *            - value to test
+	 * @return whether value exists between both end points
+	 */
+	private boolean isBetween(Double a, Double b, Double c) {
+		Double low = Math.min(a, b);
+		Double high = Math.max(a, b);
+		return (low <= c && c <= high);
 	}
 
 	@Override
@@ -116,8 +134,8 @@ public class Rectangle implements Polygon {
 	 * 
 	 * @param otherPolygon
 	 *            - Another polygon implementing the polygon interface
-	 * @return ArrayList<Vertex> - True indicates polygon exists within the
-	 *         rectangle
+	 * @return ArrayList<Vertex> - List of vertices which show points of
+	 *         intersection
 	 */
 	public ArrayList<Vertex> getIntersectionsWithPolygon(Polygon otherPolygon) {
 		ArrayList<Vertex> allPois = new ArrayList<Vertex>();
@@ -140,57 +158,15 @@ public class Rectangle implements Polygon {
 
 	}
 
-	@Override
-	/**
-	 * If another polygon is contained within this rectangle, then all points of the
-	 * sub-polygon in question will exist in this rectangle.
-	 * 
-	 * To determine if this is valid, we imagine each point of the sub-polygon one
-	 * at a time inside of the rectangle. Each vertice of the sub-polygon forms a
-	 * separate triangle within the polygon with respect to each side of the
-	 * rectangle. The total area of each of these triangles is equal to the area of
-	 * the rectangle if it exists inside.
-	 * 
-	 * So, for rectangle ABCD, if point p is within the rectangle, then the area of
-	 * sub-triangles formed by points ABP, BCP, CDP, DAP should equal the area of
-	 * rectangle ABCD. If any point does not satisfy this requirement, then it is
-	 * not contained
-	 * 
-	 * @param otherPolygon
-	 *            - Another polygon implementing the polygon interface
-	 * @return boolean - True indicates polygon exists within the rectangle
-	 * 
-	 */
-	public boolean containsPolygon(Polygon otherPolygon) {
-
-		for (Vertex aVertex : otherPolygon.getAllVertices()) {
-			// For rectangle ABCD and point p is within the rectangle, then the area of
-			// sub-triangles formed by
-			// points ABP, BCP, CDP, DAP should equal the area of rectangle ABCD, if not
-			// equal, it is not contained
-			Double triangleArea = areaOfTriangle(vertices.get(0), vertices.get(1), aVertex)
-					+ areaOfTriangle(vertices.get(1), vertices.get(2), aVertex)
-					+ areaOfTriangle(vertices.get(2), vertices.get(3), aVertex)
-					+ areaOfTriangle(vertices.get(3), vertices.get(0), aVertex);
-			Double rectangleArea = areaOfRectangle(vertices.get(0), vertices.get(1), vertices.get(2), vertices.get(3));
-
-			if (!triangleArea.equals(rectangleArea)) {
-				return false;
-			}
-		}
-		return true;
-
-	}
-
 	/**
 	 * We compare two line segments in this method. There are two kinds of line
 	 * segments. If a segment is a straight line parallel/perpendicular to the x or
-	 * y axis, in that case their equation is the integer intersecting that axis
-	 * (e.g. x=3 or y=3)
+	 * y axis, in that case their equation is the value intersecting that axis (e.g.
+	 * x=3 or y=3)
 	 * 
 	 * There are also those of sloped lines, whose equation is of the form y=mx+b
 	 * 
-	 * Since a either of the two received segments could be straight or sloped, we
+	 * Since either of the two received segments could be straight or sloped, we
 	 * handle the following combinations - Both non-sloped segments - One
 	 * non-sloped, one sloped segment - Both sloped segments
 	 * 
@@ -202,7 +178,7 @@ public class Rectangle implements Polygon {
 	 *            - Segment
 	 * @param segmentb
 	 *            - Segment
-	 * @return poi - Vertex
+	 * @return poi - Vertex indicating point of intersection
 	 */
 	private Vertex getPointOfIntersectionBetweenSegments(Segment segmenta, Segment segmentb) {
 		Vertex poi = null;
@@ -261,9 +237,9 @@ public class Rectangle implements Polygon {
 		return null;
 	}
 
-	@Override
 	/**
-	 * Verify that a point of intersection exists in the range of both segments
+	 * Verify that a point of intersection exists in the domain/range of both
+	 * segments
 	 * 
 	 * @param poi
 	 *            - a vertex which shows the point we wish to test for intersection
@@ -274,34 +250,58 @@ public class Rectangle implements Polygon {
 	 * @return boolean - if point lies within both segments range
 	 * 
 	 */
-	public boolean validatePointOfIntersectionOnSegment(Vertex poi, Segment segmenta, Segment segmentb) {
+	private boolean validatePointOfIntersectionOnSegment(Vertex poi, Segment segmenta, Segment segmentb) {
 		return (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(), poi.getxValue())
 				&& isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(), poi.getyValue())
 				&& isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(), poi.getxValue())
 				&& isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(), poi.getyValue()));
 	}
 
+	@Override
 	/**
-	 * Since the order of the points is not guaranteed, we find the minimum and
-	 * maximum between these points and test that the value is between.
+	 * If another polygon is contained within this rectangle, then all points of the
+	 * sub-polygon in question will exist in this rectangle.
 	 * 
-	 * @param a
-	 *            - end point
-	 * @param b
-	 *            - end point
-	 * @param c
-	 *            - value to test
-	 * @return whether value exists between both end points
+	 * To determine if this is valid, we imagine each point of the sub-polygon one
+	 * at a time inside of the rectangle. Each vertex of the sub-polygon forms a
+	 * separate triangle within the polygon with respect to each side of the
+	 * rectangle for a total of 4 sub-triangles. The total area of each of these
+	 * triangles is equal to the area of the rectangle if it exists inside.
+	 * 
+	 * So, for rectangle ABCD, if point p is within the rectangle, then the area of
+	 * sub-triangles formed by points ABP, BCP, CDP, DAP should equal the area of
+	 * rectangle ABCD. If any point does not satisfy this requirement, then it is
+	 * not contained
+	 * 
+	 * @param otherPolygon
+	 *            - Another polygon implementing the polygon interface
+	 * @return boolean - True indicates polygon exists within the rectangle
+	 * 
 	 */
-	private boolean isBetween(Double a, Double b, Double c) {
-		Double low = Math.min(a, b);
-		Double high = Math.max(a, b);
-		return (low <= c && c <= high);
+	public boolean containsPolygon(Polygon otherPolygon) {
+
+		for (Vertex aVertex : otherPolygon.getAllVertices()) {
+			// For rectangle ABCD and point p is within the rectangle, then the area of
+			// sub-triangles formed by
+			// points ABP, BCP, CDP, DAP should equal the area of rectangle ABCD, if not
+			// equal, it is not contained
+			Double triangleArea = areaOfTriangle(vertices.get(0), vertices.get(1), aVertex)
+					+ areaOfTriangle(vertices.get(1), vertices.get(2), aVertex)
+					+ areaOfTriangle(vertices.get(2), vertices.get(3), aVertex)
+					+ areaOfTriangle(vertices.get(3), vertices.get(0), aVertex);
+			Double rectangleArea = areaOfRectangle(vertices.get(0), vertices.get(1), vertices.get(2), vertices.get(3));
+
+			if (!triangleArea.equals(rectangleArea)) {
+				return false;
+			}
+		}
+		return true;
+
 	}
 
 	@Override
 	/**
-	 * Two adjacent lines should share the same line equation, and overlap in
+	 * Two adjacent lines will share the same line equation, and overlap in
 	 * domain/range of each other
 	 * 
 	 * This method is ugly. but it's complex and there isn't a whole lot of
@@ -320,14 +320,18 @@ public class Rectangle implements Polygon {
 	public boolean isAdjacentToPolygon(Polygon otherPolygon) {
 		for (Segment segmenta : segments) {
 			for (Segment segmentb : otherPolygon.getAllLineSegments()) {
-				// Diverge here to handle the case that both segments are parallel to either the
-				// x or
-				// y axis
+				/*
+				 * Diverge here to handle the case that both segments are parallel/perpendicular
+				 * to either the x or y axis
+				 */
+				// Make sure that we are dealing with two lines which are parallel to y
 				if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
-					// Make sure that we are dealing with two lines which are parallel to y
+
+					// Are both of these segments vertical lines
 					if (segmenta.getxLine() != null && segmentb.getxLine() != null) {
+
+						// Do the lines have the same "equation"
 						if (segmenta.getxLine().equals(segmentb.getxLine())) {
-							// These lines could potentially overlap since they share the same line equation
 							// But we still need to check that the line exists in the range of the segment
 							if (isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
 									segmentb.getVertex1().getyValue())
@@ -336,8 +340,8 @@ public class Rectangle implements Polygon {
 								return true;
 							}
 							// Check for reverse in case that adjacent polygon is tested against a larger
-							// segment and falls
-							// out of bounds from previous test
+							// segment and falls out of bounds from previous test
+							// i.e. a smaller rectangle is entirely adjacent on one side can be missed
 							if (isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(),
 									segmenta.getVertex1().getyValue())
 									|| isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(),
@@ -346,20 +350,15 @@ public class Rectangle implements Polygon {
 							}
 						}
 					}
-					// Make sure that we are dealing with two lines which are parallel to x
+					// We repeat this process, but this time for a vertical line
 					if (segmenta.getyLine() != null && segmentb.getyLine() != null) {
 						if (segmenta.getyLine().equals(segmentb.getyLine())) {
-							// These lines could potentially overlap since they share the same line equation
-							// But we still need to check that the line exists in the range of the segment
 							if (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
 									segmentb.getVertex1().getxValue())
 									|| isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
 											segmentb.getVertex2().getxValue())) {
 								return true;
 							}
-							// Check for reverse in case that adjacent polygon is tested against a larger
-							// segment and falls
-							// out of bounds from previous test
 							if (isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(),
 									segmenta.getVertex1().getxValue())
 									|| isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(),
@@ -376,8 +375,7 @@ public class Rectangle implements Polygon {
 
 				// Both lines have a slope
 				if (segmenta.getSlope() != null && segmentb.getSlope() != null) {
-					// If both lines have the same slope and intercept, and lie on some subset of
-					// the others domain/range, they are adjacent
+					// Do lines have the same slope and y-intercept
 					if (segmenta.getSlope().equals(segmentb.getSlope())
 							&& segmenta.getyIntercept().equals(segmentb.getyIntercept())) {
 						// These lines could potentially overlap since they share the same line equation
@@ -406,5 +404,20 @@ public class Rectangle implements Polygon {
 
 		return false;
 	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof Rectangle)) {
+			return false;
+		}
+		Rectangle otherRectangle = (Rectangle) object;
+
+		return (getAllVertices().contains(otherRectangle.getAllVertices().get(0))
+				&& getAllVertices().contains(otherRectangle.getAllVertices().get(1))
+				&& getAllVertices().contains(otherRectangle.getAllVertices().get(2))
+				&& getAllVertices().contains(otherRectangle.getAllVertices().get(3)));
+
+	}
+
 
 }

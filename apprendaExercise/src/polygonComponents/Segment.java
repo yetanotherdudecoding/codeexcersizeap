@@ -1,5 +1,7 @@
 package polygonComponents;
 
+import java.util.ArrayList;
+
 /**
  * Contains two vertices which define the line Initialization differs depending
  * on whether the line is parallel/perpendicular to x and y axis or is a sloped
@@ -23,9 +25,11 @@ public class Segment {
 
 		this.vertex1 = (vertex1);
 		this.vertex2 = (vertex2);
-		// Set appropriate attributes of a line segment depending on whether it is
-		// sloped or perpendicular/parallel to
-		// an axis. This fundamentally affects how our analysis is performed
+		/*
+		 * Set appropriate attributes of a line segment depending on whether it is
+		 * sloped or perpendicular/parallel to an axis. This fundamentally affects how
+		 * our analysis is performed
+		 */
 		if (vertex1.getxValue().equals(vertex2.getxValue()) || vertex1.getyValue().equals(vertex2.getyValue())) {
 			if (vertex1.getxValue().equals(vertex2.getxValue())) {
 				// Then we are a vertical line
@@ -128,6 +132,23 @@ public class Segment {
 
 		return new Vertex(x, y);
 
+	}
+
+	public ArrayList<Vertex> getVertices() {
+
+		ArrayList<Vertex> vertexList = new ArrayList<Vertex>();
+		vertexList.add(vertex1);
+		vertexList.add(vertex2);
+		return vertexList;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof Segment)) {
+			return false;
+		}
+		Segment otherSegment = (Segment) object;
+		return ((otherSegment.getVertices().contains(vertex1)) && (otherSegment.getVertices().contains(vertex2)));
 	}
 
 }
