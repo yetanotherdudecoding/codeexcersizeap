@@ -27,8 +27,6 @@ public interface Polygon {
 	ArrayList<Vertex> getAllVertices();
 
 	boolean equals(Object otherObject);
-	
-	boolean isValidPolygon();
 
 	String toString();
 

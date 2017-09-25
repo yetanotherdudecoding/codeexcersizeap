@@ -8,8 +8,10 @@ package utilities;
 public class Segment {
 	private Vertex vertex1 = null;
 	private Vertex vertex2 = null;
-	private Double xLine = null;
-	private Double yLine = null;
+	private Double xLine = null; // If the equation of the line lacks a slope, it is described here as a "line"
+									// which intersects the x axis
+	private Double yLine = null; // If the equation of the line lacks a slope, it is described here as a "line"
+									// which intersects the y axis
 	private Double slope = null;
 	private Double xIntercept = null;
 	private Double yIntercept = null;
@@ -20,7 +22,7 @@ public class Segment {
 		this.vertex2 = (vertex2);
 		// Set appropriate attributes of a line segment depending on whether it is
 		// sloped or perpendicular to
-		// an axis
+		// an axis. This fundamentally affects our analysis
 		if (vertex1.getxValue().equals(vertex2.getxValue()) || vertex1.getyValue().equals(vertex2.getyValue())) {
 			if (vertex1.getxValue().equals(vertex2.getxValue())) {
 				// Then we are a vertical line
@@ -107,6 +109,22 @@ public class Segment {
 
 	public void setyLine(Double yLine) {
 		this.yLine = yLine;
+	}
+
+	public boolean isParallelToSegment(Segment otherSegment) {
+		// Two lines are parallel if they share the same slope
+		return slope.equals(otherSegment.getSlope());
+	}
+
+	public PointOfIntersection getInterceptWithSegment(Segment otherSegment) {
+		Double x = null;
+		Double y = null;
+
+		x = (otherSegment.getyIntercept() - getyIntercept()) / (getSlope() - otherSegment.getSlope());
+		y = getSlope() * x + getyIntercept();
+
+		return new PointOfIntersection(x, y);
+
 	}
 
 	/**

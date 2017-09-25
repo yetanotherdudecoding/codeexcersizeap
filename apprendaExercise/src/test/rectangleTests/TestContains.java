@@ -1,4 +1,4 @@
-package test;
+package test.rectangleTests;
 
 
 import java.util.ArrayList;
