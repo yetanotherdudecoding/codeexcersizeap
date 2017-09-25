@@ -1,7 +1,5 @@
 package test.rectangleTests;
 
-
-
 import org.junit.Test;
 
 import polygonComponents.Vertex;
@@ -38,7 +36,7 @@ public class TestContains {
 
 		assert (polygona.containsPolygon(polygonb));
 	}
-	
+
 	@Test
 	public void testNotContainsRectangleNegativeQuadrant() {
 		Polygon polygona = new Rectangle(new Vertex(-2.0, -11.0), new Vertex(-12.0, -11.0), new Vertex(-12.0, -5.0),
@@ -48,6 +46,7 @@ public class TestContains {
 
 		assert (!polygona.containsPolygon(polygonb));
 	}
+
 	@Test
 	public void testRotatedRectangleContains() {
 		Polygon polygona = new Rectangle(new Vertex(2.0, 7.0), new Vertex(11.0, 7.0), new Vertex(11.0, 1.0),
@@ -58,7 +57,8 @@ public class TestContains {
 		assert (polygona.containsPolygon(polygonb));
 		assert (!polygonb.containsPolygon(polygona));
 	}
-	@Test 
+
+	@Test
 	public void testRotatedRectangleNotContains() {
 		Polygon polygona = new Rectangle(new Vertex(1.0, 4.0), new Vertex(6.0, 9.0), new Vertex(9.0, 6.0),
 				new Vertex(4.0, 1.0));
@@ -67,7 +67,7 @@ public class TestContains {
 
 		assert (!polygona.containsPolygon(polygonb));
 	}
-	
+
 	@Test
 	public void testRotatedRectangleContainedInRotatedRectangle() {
 		Polygon polygona = new Rectangle(new Vertex(4.0, 7.0), new Vertex(7.0, 4.0), new Vertex(4.0, 1.0),
@@ -78,7 +78,8 @@ public class TestContains {
 		assert (polygona.containsPolygon(polygonb));
 		assert (!polygonb.containsPolygon(polygona));
 	}
-	@Test 
+
+	@Test
 	public void testRotatedRectanglenNotContainedInRotatedRectangle() {
 		Polygon polygona = new Rectangle(new Vertex(3.0, 6.0), new Vertex(5.0, 4.0), new Vertex(3.0, 2.0),
 				new Vertex(1.0, 4.0));

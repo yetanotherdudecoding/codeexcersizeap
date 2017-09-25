@@ -17,6 +17,7 @@ public class TestAdjacency {
 
 		assert (polygona.isAdjacentToPolygon(polygonb));
 	}
+
 	@Test
 	public void testNonAdjacentRectanglesOnSameLine() {
 		Polygon polygona = new Rectangle(new Vertex(2.0, 8.0), new Vertex(8.0, 8.0), new Vertex(8.0, 4.0),
@@ -101,6 +102,7 @@ public class TestAdjacency {
 		assert (polygona.isAdjacentToPolygon(polygonb));
 		assert (polygonb.isAdjacentToPolygon(polygona));
 	}
+
 	@Test
 	public void testAdjacencyOfRotatedRectangle2() {
 
@@ -123,6 +125,7 @@ public class TestAdjacency {
 		assert (!polygona.isAdjacentToPolygon(polygonb));
 		assert (!polygonb.isAdjacentToPolygon(polygona));
 	}
+
 	@Test
 	public void testNonAdjacencyOfRotatedRectangleOnSameLine() {
 		Polygon polygona = new Rectangle(new Vertex(1.0, 6.0), new Vertex(5.0, 10.0), new Vertex(6.0, 9.0),

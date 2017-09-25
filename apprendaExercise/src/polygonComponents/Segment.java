@@ -1,8 +1,7 @@
 package polygonComponents;
 
 /**
- * Contains two vertices which define the line 
- * Initialization differs depending
+ * Contains two vertices which define the line Initialization differs depending
  * on whether the line is parallel/perpendicular to x and y axis or is a sloped
  * line
  * 

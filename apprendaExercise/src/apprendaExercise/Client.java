@@ -1,4 +1,5 @@
 package apprendaExercise;
+
 /**
  * Something so you can run it
  * 
@@ -9,7 +10,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import polygonComponents.Vertex;
-import shapes.*;
+import shapes.Polygon;
+import shapes.Rectangle;
 
 public class Client {
 	private static final String polygon1Name = "rectangle";// Because I only have time to implement a rectangle

@@ -6,7 +6,7 @@ import polygonComponents.Segment;
 import polygonComponents.Vertex;
 
 /**
- * Handle the rectangle type of polygon
+ * An implementation of the polygon interface for a rectangle
  * 
  * @author brads
  *
@@ -14,7 +14,7 @@ import polygonComponents.Vertex;
 public class Rectangle implements Polygon {
 
 	private ArrayList<Segment> segments = new ArrayList<Segment>(); // Segments which constitute the polygon
-	private ArrayList<Vertex> vertices = new ArrayList<Vertex>(); // Verticies which make up this polygon, in clockwise
+	private ArrayList<Vertex> vertices = new ArrayList<Vertex>(); // Vertices which make up this polygon, in clockwise
 																	// order
 
 	/**
@@ -264,6 +264,15 @@ public class Rectangle implements Polygon {
 	@Override
 	/**
 	 * Verify that a point of intersection exists in the range of both segments
+	 * 
+	 * @param poi
+	 *            - a vertex which shows the point we wish to test for intersection
+	 * @param segment
+	 *            a - Segment
+	 * @param segment
+	 *            b - Segment
+	 * @return boolean - if point lies within both segments range
+	 * 
 	 */
 	public boolean validatePointOfIntersectionOnSegment(Vertex poi, Segment segmenta, Segment segmentb) {
 		return (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(), poi.getxValue())
@@ -292,8 +301,21 @@ public class Rectangle implements Polygon {
 
 	@Override
 	/**
-	 * TODO: I should write something here on what I did Two adjacent lines should
-	 * share the same line equation, and overlap in domain/range of each other
+	 * Two adjacent lines should share the same line equation, and overlap in
+	 * domain/range of each other
+	 * 
+	 * This method is ugly. but it's complex and there isn't a whole lot of
+	 * duplicate code, even though it looks like there is
+	 * 
+	 * @param otherPolygon
+	 *            - another polygon
+	 * 
+	 * 
+	 * @param return
+	 *            boolean - whether at least one side of the polygon is adjacent to
+	 *            this polygon
+	 * 
+	 * 
 	 */
 	public boolean isAdjacentToPolygon(Polygon otherPolygon) {
 		for (Segment segmenta : segments) {

@@ -12,7 +12,7 @@ import polygonComponents.Vertex;
  *
  */
 public interface Polygon {
-	
+
 	ArrayList<Vertex> getIntersectionsWithPolygon(Polygon otherPolygon);
 
 	boolean containsPolygon(Polygon otherPolygon);
