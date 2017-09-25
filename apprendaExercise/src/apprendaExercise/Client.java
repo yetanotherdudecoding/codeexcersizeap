@@ -1,7 +1,7 @@
 package apprendaExercise;
 /**
  * Something so you can run it
- * - Bradley
+ * 
  */
 import java.io.BufferedReader;
 import java.io.IOException;
