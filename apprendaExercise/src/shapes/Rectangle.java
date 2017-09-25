@@ -2,8 +2,6 @@ package shapes;
 
 import utilities.Vertex;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import utilities.Segment;
 import utilities.PointOfIntersection;
@@ -38,6 +36,72 @@ public class Rectangle implements Polygon {
 		vertices.add(vertex2);
 		vertices.add(vertex3);
 		vertices.add(vertex4);
+
+	}
+
+	public Rectangle(ArrayList<Vertex> verticies) {
+		segments.add(new Segment(verticies.get(0), verticies.get(1)));
+		segments.add(new Segment(verticies.get(1), verticies.get(2)));
+		segments.add(new Segment(verticies.get(2), verticies.get(3)));
+		segments.add(new Segment(verticies.get(3), verticies.get(0)));
+
+		vertices.add(verticies.get(0));
+		vertices.add(verticies.get(1));
+		vertices.add(verticies.get(2));
+		vertices.add(verticies.get(3));
+	}
+
+	public ArrayList<Segment> getAllLineSegments() {
+		return segments;
+	}
+
+	public ArrayList<Vertex> getAllVertices() {
+		return vertices;
+	}
+
+	/**
+	 * The determinate method must be applied counter clockwise to each vertex to
+	 * obtain the area
+	 * 
+	 * @param vertexA
+	 * @param vertexB
+	 * @param vertexC
+	 * @param vertexD
+	 * @return Double - area of rectangle
+	 */
+	public Double areaOfRectangle(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD) {
+		Vertex vertex1 = vertexA;
+		Vertex vertex2 = vertexD;
+		Vertex vertex3 = vertexC;
+		Vertex vertex4 = vertexB;
+
+		Double determinate = ((vertex1.getxValue() * vertex2.getyValue()) - (vertex2.getxValue() * vertex1.getyValue()))
+				+ ((vertex2.getxValue() * vertex3.getyValue()) - (vertex3.getxValue() * vertex2.getyValue()))
+				+ ((vertex3.getxValue() * vertex4.getyValue()) - (vertex4.getxValue() * vertex3.getyValue()))
+				+ ((vertex4.getxValue() * vertex1.getyValue()) - (vertex1.getxValue() * vertex4.getyValue()));
+		return Math.abs(determinate / 2);
+	}
+
+	/**
+	 * The determinate method must be applied counter clockwise to each vertex to
+	 * obtain the area
+	 * 
+	 * @param vertexA
+	 * @param vertexB
+	 * @param vertexC
+	 * @return Double - area of triangle
+	 */
+	public Double areaOfTriangle(Vertex vertexA, Vertex vertexB, Vertex vertexC) {
+		Vertex vertex1 = vertexA;
+		Vertex vertex2 = vertexC;
+		Vertex vertex3 = vertexB;
+
+		// Use determinate method
+		Double determinate = (vertex1.getxValue() * vertex2.getyValue()) + (vertex2.getxValue() * vertex3.getyValue())
+				+ (vertex3.getxValue() * vertex1.getyValue()) - (vertex1.getxValue() * vertex3.getyValue())
+				- (vertex2.getxValue() * vertex1.getyValue()) - (vertex3.getxValue() * vertex2.getyValue());
+
+		return Math.abs(determinate / 2);
 
 	}
 
@@ -117,75 +181,6 @@ public class Rectangle implements Polygon {
 		}
 		return true;
 
-	}
-
-	// public Double areaOfRectangle(Vertex vertexA, Vertex vertexB, Vertex vertexC)
-	// {
-	// Double side1 = getLength(vertexA, vertexB);
-	// Double side2 = getLength(vertexB, vertexC);
-	//
-	// return side1 * side2;
-	// }
-
-	public Double areaOfRectangle(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD) {
-		Vertex vertex1 = vertexA;
-		Vertex vertex2 = vertexD;
-		Vertex vertex3 = vertexC;
-		Vertex vertex4 = vertexB;
-
-		Double determinate = ((vertex1.getxValue() * vertex2.getyValue()) - (vertex2.getxValue() * vertex1.getyValue()))
-				+ ((vertex2.getxValue() * vertex3.getyValue()) - (vertex3.getxValue() * vertex2.getyValue()))
-				+ ((vertex3.getxValue() * vertex4.getyValue()) - (vertex4.getxValue() * vertex3.getyValue()))
-				+ ((vertex4.getxValue() * vertex1.getyValue()) - (vertex1.getxValue() * vertex4.getyValue()));
-		return Math.abs(determinate / 2);
-	}
-
-	// Herons formula is prone to rounding errors. We also see this when using the
-	// distance formula when trying to compute the sides and area of a rectangle.
-	// we need a more accurate method
-	// public Double areaOfTriangle(Vertex vertexA, Vertex vertexB, Vertex vertexC)
-	// {
-	// //Use Herons formula
-	// Double sideA = getLength(vertexA, vertexB);
-	// Double sideB = getLength(vertexB, vertexC);
-	// Double sideC = getLength(vertexC, vertexA);
-	//
-	// // Half the perimeter
-	// Double s = (sideA + sideB + sideC) / 2;
-	//
-	// return Math.sqrt((s * (s - sideA) * (s - sideB) * (s - sideC)));
-	//
-	// }
-	/**
-	 * The determinate method must be applied counter clockwise to each vertex to
-	 * obtain the area
-	 * 
-	 * @param vertexA
-	 * @param vertexB
-	 * @param vertexC
-	 * @return Double - area of triangle
-	 */
-	public Double areaOfTriangle(Vertex vertexA, Vertex vertexB, Vertex vertexC) {
-		Vertex vertex1 = vertexA;
-		Vertex vertex2 = vertexC;
-		Vertex vertex3 = vertexB;
-
-		// Use determinate method
-		Double determinate = (vertex1.getxValue() * vertex2.getyValue()) + (vertex2.getxValue() * vertex3.getyValue())
-				+ (vertex3.getxValue() * vertex1.getyValue()) - (vertex1.getxValue() * vertex3.getyValue())
-				- (vertex2.getxValue() * vertex1.getyValue()) - (vertex3.getxValue() * vertex2.getyValue());
-
-		return Math.abs(determinate / 2);
-
-	}
-
-	public Double getLength(Vertex vertex1, Vertex vertex2) {
-		return Math.sqrt(Math.pow(vertex2.getxValue() - vertex1.getxValue(), 2)
-				+ Math.pow(vertex2.getyValue() - vertex1.getyValue(), 2));
-	}
-
-	public ArrayList<Segment> getAllLineSegments() {
-		return segments;
 	}
 
 	/**
@@ -268,8 +263,9 @@ public class Rectangle implements Polygon {
 	}
 
 	@Override
-	// TODO: I do not know why this is not letting me use a private scope on this
-	// method.
+	/**
+	 * Verify that a point of intersection exists in the range of both segments
+	 */
 	public boolean validatePointOfIntersectionOnSegment(PointOfIntersection poi, Segment segmenta, Segment segmentb) {
 		return (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(), poi.getX())
 				&& isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(), poi.getY())
@@ -277,14 +273,22 @@ public class Rectangle implements Polygon {
 				&& isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(), poi.getY()));
 	}
 
+	/**
+	 * Since the order of the points is not guaranteed, we find the minimum and
+	 * maximum between these points and test that the value is between.
+	 * 
+	 * @param a
+	 *            - end point
+	 * @param b
+	 *            - end point
+	 * @param c
+	 *            - value to test
+	 * @return whether value exists between both end points
+	 */
 	private boolean isBetween(Double a, Double b, Double c) {
 		Double low = Math.min(a, b);
 		Double high = Math.max(a, b);
 		return (low <= c && c <= high);
-	}
-
-	public ArrayList<Vertex> getAllVertices() {
-		return vertices;
 	}
 
 	@Override
@@ -295,29 +299,50 @@ public class Rectangle implements Polygon {
 	public boolean isAdjacentToPolygon(Polygon otherPolygon) {
 		for (Segment segmenta : segments) {
 			for (Segment segmentb : otherPolygon.getAllLineSegments()) {
-				// Diverge here to handle the case that both segments are parallel to the x and
+				// Diverge here to handle the case that both segments are parallel to either the
+				// x or
 				// y axis
 				if (segmenta.getSlope() == null && segmentb.getSlope() == null) {
 					// Make sure that we are dealing with two lines which are parallel to y
 					if (segmenta.getxLine() != null && segmentb.getxLine() != null) {
 						if (segmenta.getxLine().equals(segmentb.getxLine())) {
 							// These lines could potentially overlap since they share the same line equation
+							// But we still need to check that the line exists in the range of the segment
+							if (isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
+									segmentb.getVertex1().getyValue())
+									|| isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
+											segmentb.getVertex2().getyValue())) {
+								return true;
+							}
+							// Check for reverse in case that adjacent polygon is tested against a larger
+							// segment and falls
+							// out of bounds from previous test
+							if (isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(),
+									segmenta.getVertex1().getyValue())
+									|| isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(),
+											segmenta.getVertex2().getyValue())) {
+								return true;
+							}
+						}
+					}
+					// Make sure that we are dealing with two lines which are parallel to x
+					if (segmenta.getyLine() != null && segmentb.getyLine() != null) {
+						if (segmenta.getyLine().equals(segmentb.getyLine())) {
+							// These lines could potentially overlap since they share the same line equation
+							// But we still need to check that the line exists in the range of the segment
 							if (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
 									segmentb.getVertex1().getxValue())
 									|| isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
 											segmentb.getVertex2().getxValue())) {
 								return true;
 							}
-						}
-					}
-					// Make sure that we are dealing with two lines which have horizontal asymptotes
-					if (segmenta.getyLine() != null && segmentb.getyLine() != null) {
-						if (segmenta.getyLine().equals(segmentb.getyLine())) {
-							// These lines could potentially overlap since they share the same line equation
-							if (isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
-									segmentb.getVertex1().getyValue())
-									|| isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(),
-											segmentb.getVertex2().getyValue())) {
+							// Check for reverse in case that adjacent polygon is tested against a larger
+							// segment and falls
+							// out of bounds from previous test
+							if (isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(),
+									segmenta.getVertex1().getxValue())
+									|| isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(),
+											segmenta.getVertex2().getxValue())) {
 								return true;
 							}
 						}
@@ -334,11 +359,22 @@ public class Rectangle implements Polygon {
 					// the others domain/range, they are adjacent
 					if (segmenta.getSlope().equals(segmentb.getSlope())
 							&& segmenta.getyIntercept().equals(segmentb.getyIntercept())) {
-
+						// These lines could potentially overlap since they share the same line equation
+						// But we still need to check that the line exists in the range of the segment
 						if ((isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
 								segmentb.getVertex1().getxValue())
 								|| isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(),
 										segmentb.getVertex2().getxValue()))) {
+							return true;
+						}
+
+						// Check for reverse in case that adjacent polygon is tested against a larger
+						// segment and falls
+						// out of bounds from previous test
+						if ((isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(),
+								segmenta.getVertex1().getxValue())
+								|| isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(),
+										segmenta.getVertex2().getxValue()))) {
 							return true;
 						}
 

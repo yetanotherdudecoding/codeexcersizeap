@@ -5,15 +5,15 @@ import utilities.Segment;
 import utilities.Vertex;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
- * 
+ * Program to an interface in case I have time to extend this to other polygons
+ *
  * @author brads
  *
  */
 public interface Polygon {
-	// TODO: Review these interface methods for all polygons.
+	
 	ArrayList<PointOfIntersection> getIntersectionsWithPolygon(Polygon otherPolygon);
 
 	boolean containsPolygon(Polygon otherPolygon);

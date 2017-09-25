@@ -1,13 +1,11 @@
 package test.rectangleTests;
 
 
-import java.util.ArrayList;
 
 import org.junit.Test;
 
 import shapes.Polygon;
 import shapes.Rectangle;
-import utilities.PointOfIntersection;
 import utilities.Vertex;
 
 public class TestContains {

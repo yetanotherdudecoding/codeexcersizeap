@@ -1,7 +1,5 @@
 package test.utilitiesTest;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import utilities.Segment;
@@ -15,7 +13,7 @@ public class TestSegment {
 		System.out.println(mySegment);
 		assert(mySegment.getSlope().equals(1.0));
 		assert(mySegment.getyIntercept().equals(0.0));
-		
+
 		mySegment = new Segment(new Vertex(1.0, 7.0), new Vertex(-1.0, -5.0));
 		System.out.println(mySegment);
 		assert(mySegment.getSlope().equals(6.0));

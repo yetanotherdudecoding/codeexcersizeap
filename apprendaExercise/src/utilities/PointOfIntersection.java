@@ -1,7 +1,7 @@
 package utilities;
 
 /**
- * 
+ * A point of intersection is really just another vertex. Maybe I'll consolidate if I have the time.
  * @author brads
  *
  */

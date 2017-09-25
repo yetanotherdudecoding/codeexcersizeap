@@ -1,6 +1,10 @@
 package utilities;
 
 /**
+ * Contains two vertices which define the line 
+ * Initialization differs depending
+ * on whether the line is parallel/perpendicular to x and y axis or is a sloped
+ * line
  * 
  * @author brads
  *
@@ -21,8 +25,8 @@ public class Segment {
 		this.vertex1 = (vertex1);
 		this.vertex2 = (vertex2);
 		// Set appropriate attributes of a line segment depending on whether it is
-		// sloped or perpendicular to
-		// an axis. This fundamentally affects our analysis
+		// sloped or perpendicular/parallel to
+		// an axis. This fundamentally affects how our analysis is performed
 		if (vertex1.getxValue().equals(vertex2.getxValue()) || vertex1.getyValue().equals(vertex2.getyValue())) {
 			if (vertex1.getxValue().equals(vertex2.getxValue())) {
 				// Then we are a vertical line
@@ -125,16 +129,6 @@ public class Segment {
 
 		return new PointOfIntersection(x, y);
 
-	}
-
-	/**
-	 * Simple distance formula
-	 * 
-	 * @return - distance between two points
-	 */
-	public Double getLength() {
-		return Math.sqrt(Math.pow(vertex2.getxValue() - vertex1.getxValue(), 2)
-				+ Math.pow(vertex2.getyValue() - vertex1.getyValue(), 2));
 	}
 
 }
