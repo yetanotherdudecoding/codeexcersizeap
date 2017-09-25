@@ -1,10 +1,9 @@
 package shapes;
 
-import utilities.Vertex;
 import java.util.ArrayList;
 
-import utilities.Segment;
-import utilities.PointOfIntersection;
+import polygonComponents.Segment;
+import polygonComponents.Vertex;
 
 /**
  * Handle the rectangle type of polygon
@@ -117,14 +116,14 @@ public class Rectangle implements Polygon {
 	 * 
 	 * @param otherPolygon
 	 *            - Another polygon implementing the polygon interface
-	 * @return ArrayList<PointOfIntersection> - True indicates polygon exists within
-	 *         the rectangle
+	 * @return ArrayList<Vertex> - True indicates polygon exists within the
+	 *         rectangle
 	 */
-	public ArrayList<PointOfIntersection> getIntersectionsWithPolygon(Polygon otherPolygon) {
-		ArrayList<PointOfIntersection> allPois = new ArrayList<PointOfIntersection>();
+	public ArrayList<Vertex> getIntersectionsWithPolygon(Polygon otherPolygon) {
+		ArrayList<Vertex> allPois = new ArrayList<Vertex>();
 		for (Segment mySegment : segments) {
 			for (Segment otherSegment : otherPolygon.getAllLineSegments()) {
-				PointOfIntersection poi = null;// Flush for this analysis
+				Vertex poi = null;// Flush for this analysis
 				poi = getPointOfIntersectionBetweenSegments(mySegment, otherSegment);
 				if (poi != null) {
 					// It is possible a point of intersection may appear twice if a line segment
@@ -203,19 +202,19 @@ public class Rectangle implements Polygon {
 	 *            - Segment
 	 * @param segmentb
 	 *            - Segment
-	 * @return poi - PointOfIntersection
+	 * @return poi - Vertex
 	 */
-	private PointOfIntersection getPointOfIntersectionBetweenSegments(Segment segmenta, Segment segmentb) {
-		PointOfIntersection poi = null;
+	private Vertex getPointOfIntersectionBetweenSegments(Segment segmenta, Segment segmentb) {
+		Vertex poi = null;
 
 		// Intersection of two non-sloped lines
 		if (segmenta.getxLine() != null && segmentb.getyLine() != null) {
 			// segmenta is vertical and segmentb is horizontal
-			poi = new PointOfIntersection(segmenta.getxLine(), segmentb.getyLine());
+			poi = new Vertex(segmenta.getxLine(), segmentb.getyLine());
 		}
 		if (segmenta.getyLine() != null && segmentb.getxLine() != null) {
 			// segmenta is horizontal and segmentb is vertical
-			poi = new PointOfIntersection(segmentb.getxLine(), segmenta.getyLine());
+			poi = new Vertex(segmentb.getxLine(), segmenta.getyLine());
 		}
 
 		// Line segment a is sloped and line segment b is non-sloped
@@ -224,24 +223,24 @@ public class Rectangle implements Polygon {
 			// line segment b is vertical and we will intercept where segmenta line equation
 			// resolves to y
 			if (segmentb.getxLine() != null) {
-				poi = new PointOfIntersection(segmentb.getxLine(), segmenta.computeYForX(segmentb.getxLine()));
+				poi = new Vertex(segmentb.getxLine(), segmenta.computeYForX(segmentb.getxLine()));
 
 			}
 			// line segment b is horizontal and we will intercept where segmenta line
 			// equation resolves to x
 			if (segmentb.getyLine() != null) {
-				poi = new PointOfIntersection(segmenta.computeXForY(segmentb.getyLine()), segmentb.getyLine());
+				poi = new Vertex(segmenta.computeXForY(segmentb.getyLine()), segmentb.getyLine());
 			}
 		}
 		// Line segmentb is sloped and line segmenta is non-sloped
 		if (segmentb.getSlope() != null && segmenta.getSlope() == null) {
 
 			if (segmenta.getxLine() != null) {
-				poi = new PointOfIntersection(segmenta.getxLine(), segmentb.computeYForX(segmenta.getxLine()));
+				poi = new Vertex(segmenta.getxLine(), segmentb.computeYForX(segmenta.getxLine()));
 
 			}
 			if (segmenta.getyLine() != null) {
-				poi = new PointOfIntersection(segmentb.computeXForY(segmenta.getyLine()), segmenta.getyLine());
+				poi = new Vertex(segmentb.computeXForY(segmenta.getyLine()), segmenta.getyLine());
 			}
 		}
 
@@ -266,11 +265,11 @@ public class Rectangle implements Polygon {
 	/**
 	 * Verify that a point of intersection exists in the range of both segments
 	 */
-	public boolean validatePointOfIntersectionOnSegment(PointOfIntersection poi, Segment segmenta, Segment segmentb) {
-		return (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(), poi.getX())
-				&& isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(), poi.getY())
-				&& isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(), poi.getX())
-				&& isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(), poi.getY()));
+	public boolean validatePointOfIntersectionOnSegment(Vertex poi, Segment segmenta, Segment segmentb) {
+		return (isBetween(segmenta.getVertex1().getxValue(), segmenta.getVertex2().getxValue(), poi.getxValue())
+				&& isBetween(segmenta.getVertex1().getyValue(), segmenta.getVertex2().getyValue(), poi.getyValue())
+				&& isBetween(segmentb.getVertex1().getxValue(), segmentb.getVertex2().getxValue(), poi.getxValue())
+				&& isBetween(segmentb.getVertex1().getyValue(), segmentb.getVertex2().getyValue(), poi.getyValue()));
 	}
 
 	/**

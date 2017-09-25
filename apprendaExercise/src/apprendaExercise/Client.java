@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import polygonComponents.Vertex;
 import shapes.*;
-import utilities.Vertex;
 
 public class Client {
 	private static final String polygon1Name = "rectangle";// Because I only have time to implement a rectangle

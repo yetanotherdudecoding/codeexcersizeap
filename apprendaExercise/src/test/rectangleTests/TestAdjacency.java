@@ -2,9 +2,9 @@ package test.rectangleTests;
 
 import org.junit.Test;
 
+import polygonComponents.Vertex;
 import shapes.Polygon;
 import shapes.Rectangle;
-import utilities.Vertex;
 
 public class TestAdjacency {
 

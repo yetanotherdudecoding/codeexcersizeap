@@ -1,6 +1,8 @@
-package utilities;
+package polygonComponents;
+
 /**
  * Describes a collection of two points
+ * 
  * @author brads
  *
  */
@@ -35,4 +37,18 @@ public class Vertex {
 		return "Vertex:{" + xValue + "," + yValue + "}";
 	}
 
+	@Override
+	public boolean equals(Object otherObject) {
+		if (otherObject == this) {
+			return true;
+		}
+		if (!(otherObject instanceof Vertex)) {
+			return false;
+		}
+		Vertex aVertex = (Vertex) otherObject;
+		if (aVertex.getxValue().equals(getxValue()) && aVertex.getyValue().equals(getyValue())) {
+			return true;
+		}
+		return false;
+	}
 }

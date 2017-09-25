@@ -2,8 +2,8 @@ package test.utilitiesTest;
 
 import org.junit.Test;
 
-import utilities.Segment;
-import utilities.Vertex;
+import polygonComponents.Segment;
+import polygonComponents.Vertex;
 
 public class TestSegment {
 

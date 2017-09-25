@@ -1,10 +1,9 @@
 package shapes;
 
-import utilities.PointOfIntersection;
-import utilities.Segment;
-import utilities.Vertex;
-
 import java.util.ArrayList;
+
+import polygonComponents.Segment;
+import polygonComponents.Vertex;
 
 /**
  * Program to an interface in case I have time to extend this to other polygons
@@ -14,13 +13,13 @@ import java.util.ArrayList;
  */
 public interface Polygon {
 	
-	ArrayList<PointOfIntersection> getIntersectionsWithPolygon(Polygon otherPolygon);
+	ArrayList<Vertex> getIntersectionsWithPolygon(Polygon otherPolygon);
 
 	boolean containsPolygon(Polygon otherPolygon);
 
 	boolean isAdjacentToPolygon(Polygon otherPolygon);
 
-	boolean validatePointOfIntersectionOnSegment(PointOfIntersection poi, Segment segmenta, Segment segmentb);
+	boolean validatePointOfIntersectionOnSegment(Vertex pointOfIntersection, Segment segmenta, Segment segmentb);
 
 	ArrayList<Segment> getAllLineSegments();
 

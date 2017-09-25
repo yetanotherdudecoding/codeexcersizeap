@@ -1,4 +1,4 @@
-package utilities;
+package polygonComponents;
 
 /**
  * Contains two vertices which define the line 
@@ -120,14 +120,14 @@ public class Segment {
 		return slope.equals(otherSegment.getSlope());
 	}
 
-	public PointOfIntersection getInterceptWithSegment(Segment otherSegment) {
+	public Vertex getInterceptWithSegment(Segment otherSegment) {
 		Double x = null;
 		Double y = null;
 
 		x = (otherSegment.getyIntercept() - getyIntercept()) / (getSlope() - otherSegment.getSlope());
 		y = getSlope() * x + getyIntercept();
 
-		return new PointOfIntersection(x, y);
+		return new Vertex(x, y);
 
 	}
 

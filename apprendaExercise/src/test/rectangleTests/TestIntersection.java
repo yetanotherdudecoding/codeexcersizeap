@@ -5,10 +5,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import polygonComponents.Vertex;
 import shapes.Polygon;
 import shapes.Rectangle;
-import utilities.Vertex;
-import utilities.PointOfIntersection;
 
 public class TestIntersection {
 
@@ -19,11 +18,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(8.0, 8.0), new Vertex(16.0, 8.0), new Vertex(16.0, 1.0),
 				new Vertex(8.0, 1.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
-		PointOfIntersection poi1 = new PointOfIntersection(12.0, 8.0);
-		PointOfIntersection poi2 = new PointOfIntersection(8.0, 5.0);
+		Vertex poi1 = new Vertex(12.0, 8.0);
+		Vertex poi2 = new Vertex(8.0, 5.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -38,11 +37,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(8.0, 8.0), new Vertex(9.0, 8.0), new Vertex(9.0, 1.0),
 				new Vertex(8.0, 1.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
-		PointOfIntersection poi1 = new PointOfIntersection(9.0, 5.0);
-		PointOfIntersection poi2 = new PointOfIntersection(8.0, 5.0);
+		Vertex poi1 = new Vertex(9.0, 5.0);
+		Vertex poi2 = new Vertex(8.0, 5.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -57,7 +56,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(5.0, 3.0), new Vertex(8.0, 3.0), new Vertex(8.0, 1.0),
 				new Vertex(5.0, 1.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
 		// Assertions
@@ -70,7 +69,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(14.0, 6.0), new Vertex(19.0, 6.0), new Vertex(19.0, 3.0),
 				new Vertex(14.0, 3.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
 		// Assertions
@@ -83,11 +82,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(-8.0, -8.0), new Vertex(-16.0, -8.0), new Vertex(-16.0, -1.0),
 				new Vertex(-8.0, -1.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
-		PointOfIntersection poi1 = new PointOfIntersection(-12.0, -8.0);
-		PointOfIntersection poi2 = new PointOfIntersection(-8.0, -5.0);
+		Vertex poi1 = new Vertex(-12.0, -8.0);
+		Vertex poi2 = new Vertex(-8.0, -5.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -101,7 +100,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(-14.0, -6.0), new Vertex(-19.0, -6.0), new Vertex(-19.0, -3.0),
 				new Vertex(-14.0, -3.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
 		// Assertions
@@ -115,11 +114,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(7.0, 9.0), new Vertex(12.0, 9.0), new Vertex(12.0, 4.0),
 				new Vertex(7.0, 4.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
-		PointOfIntersection poi1 = new PointOfIntersection(7.0, 8.0);
-		PointOfIntersection poi2 = new PointOfIntersection(7.0, 4.0);
+		Vertex poi1 = new Vertex(7.0, 8.0);
+		Vertex poi2 = new Vertex(7.0, 4.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -133,7 +132,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(6.0, 11.0), new Vertex(9.0, 11.0), new Vertex(9.0, 8.0),
 				new Vertex(6.0, 8.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
 		// Assertions
@@ -148,11 +147,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(7.0, 9.0), new Vertex(12.0, 9.0), new Vertex(12.0, 4.0),
 				new Vertex(7.0, 4.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygonb.getIntersectionsWithPolygon(polygona);
 
-		PointOfIntersection poi1 = new PointOfIntersection(7.0, 8.0);
-		PointOfIntersection poi2 = new PointOfIntersection(7.0, 4.0);
+		Vertex poi1 = new Vertex(7.0, 8.0);
+		Vertex poi2 = new Vertex(7.0, 4.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -167,7 +166,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(6.0, 11.0), new Vertex(9.0, 11.0), new Vertex(9.0, 8.0),
 				new Vertex(6.0, 8.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygonb.getIntersectionsWithPolygon(polygona);
 
 		// Assertions
@@ -180,11 +179,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(-7.0, -9.0), new Vertex(-12.0, -9.0), new Vertex(-12.0, -4.0),
 				new Vertex(-7.0, -4.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
-		PointOfIntersection poi1 = new PointOfIntersection(-7.0, -8.0);
-		PointOfIntersection poi2 = new PointOfIntersection(-7.0, -4.0);
+		Vertex poi1 = new Vertex(-7.0, -8.0);
+		Vertex poi2 = new Vertex(-7.0, -4.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -198,7 +197,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(-6.0, -11.0), new Vertex(-9.0, -11.0), new Vertex(-9.0, -8.0),
 				new Vertex(-6.0, -8.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygona.getIntersectionsWithPolygon(polygonb);
 
 		// Assertions
@@ -212,11 +211,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(-7.0, -9.0), new Vertex(-12.0, -9.0), new Vertex(-12.0, -4.0),
 				new Vertex(-7.0, -4.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygonb.getIntersectionsWithPolygon(polygona);
 
-		PointOfIntersection poi1 = new PointOfIntersection(-7.0, -8.0);
-		PointOfIntersection poi2 = new PointOfIntersection(-7.0, -4.0);
+		Vertex poi1 = new Vertex(-7.0, -8.0);
+		Vertex poi2 = new Vertex(-7.0, -4.0);
 		// Assertions
 		assert (pois.contains(poi1));
 		assert (pois.contains(poi2));
@@ -231,7 +230,7 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(-6.0, -11.0), new Vertex(-9.0, -11.0), new Vertex(-9.0, -8.0),
 				new Vertex(-6.0, -8.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygonb.getIntersectionsWithPolygon(polygona);
 
 		// Assertions
@@ -246,11 +245,11 @@ public class TestIntersection {
 		Polygon polygonb = new Rectangle(new Vertex(4.0, 4.0), new Vertex(6.0, 2.0), new Vertex(4.0, 0.0),
 				new Vertex(2.0, 2.0));
 
-		ArrayList<PointOfIntersection> pois = new ArrayList<PointOfIntersection>();
+		ArrayList<Vertex> pois = new ArrayList<Vertex>();
 		pois = polygonb.getIntersectionsWithPolygon(polygona);
 
-		PointOfIntersection poi1 = new PointOfIntersection(4.5, 3.5);
-		PointOfIntersection poi2 = new PointOfIntersection(2.5, 2.5);
+		Vertex poi1 = new Vertex(4.5, 3.5);
+		Vertex poi2 = new Vertex(2.5, 2.5);
 
 		// Assertions
 		assert (pois.contains(poi1));
